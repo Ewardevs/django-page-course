@@ -1,0 +1,11 @@
+<form method="post">
+  {% csrf_token %} {{error}}
+  <label for="username">Nombre de Usuario</label>
+  <input type="text" name="username" />
+  <label for="password1">Ingrese su contraseña</label>
+  <input type="password" name="password1" />
+  <label for="password2">Confirme su contraseña</label>
+  <input type="password" name="password2" />
+
+  <button>Registrarse</button>
+</form>

@@ -1,0 +1,20 @@
+{% extends 'bases/base.html' %}
+<!---->
+{% block content %}
+<!---->
+{% for curso in cursos %}
+<a href="{% url 'tarea' curso.id_curso.nombre_curso %}">
+  <div class="card-curso">
+    <img src="{{curso.id_curso.img_curso.url}}">
+    <p>{{curso.id_curso.nombre_curso}}</p>
+    <p>{{curso.id_curso.descripcion_curso}}</p>
+    <form action="{% url 'desinscribirse' curso.id %}" method="post">
+      {% csrf_token %}
+      <button>Dar de baja el curso</button>
+    </form>
+  </div>
+</a>
+  {% endfor %}
+  <!---->
+  {% endblock %}
+</a>

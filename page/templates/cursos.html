@@ -1,0 +1,12 @@
+{% extends 'bases/base.html' %}
+<!---->
+{% block content %}
+<!---->
+{{error}} {% for curso in cursos %}
+<p>{{curso.nombre_curso}}</p>
+<form action="{% url 'inscribirse' curso.id %}" method="post">
+  {% csrf_token %}
+  <button>Inscribirse</button>
+</form>
+
+{% endfor %} {% endblock content %}
