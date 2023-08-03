@@ -5,6 +5,9 @@
 <!---->
 {% for tarea in tareas %}
 <div style="border: 1px solid black" id="openModalBtn">
+  {% if tarea.estado == "Pendiente" %}
+  <span>{{tarea.id_tarea.puntos}} puntos</span>
+  {% endif %}
   <p>{{tarea.id_tarea.titulo_tarea}}</p>
   <p>{{tarea.id_tarea.descripcion_tarea}}</p>
   <p>{{tarea.estado}}</p>
@@ -12,26 +15,24 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <p>{{tarea.id}}</p>
     <p>{{tarea.id_tarea.titulo_tarea}}</p>
     <p>{{tarea.id_tarea.descripcion_tarea}}</p>
     <p>{{tarea.estado}}</p>
     <form action="{% url 'enviar_tarea' %}" method="post">
       {% csrf_token %}
       <input name="id" type="hidden" value="{{tarea.id}}" />
-      <input type="file" name="pdf_file" accept=".pdf" />
 
-      {% if tarea.estado == "Entregado" %}
-      <!---->
-      {% if tarea.puntos_hechos is None %}
-      <p>no corregido</p>
-      {% else %}
+      {% if tarea.estado == "Corregido" %}
       <p>{{tarea.puntos_hechos}} de {{tarea.id_tarea.puntos}}</p>
-      {% endif %}
-
-      <button disabled>Subir Tarea</button>
       {% else %}
-      <button>Subir Tarea</button>
+      <!---->
+      {% if tarea.estado == "Entregado" %}
+      <p>0 de {{tarea.id_tarea.puntos}}</p>
+      {% else %}
+      <input type="file" name="pdf_file" accept=".pdf" />
+      <button>Entregar</button>
+      {% endif %}
+      <!---->
       {% endif %}
     </form>
   </div>

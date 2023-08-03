@@ -58,6 +58,7 @@ class Tarea_hecha(models.Model):
     ESTADOS_CHOICES = [
         ('Pendiente', 'Pendiente'),
         ('Entregado', 'Entregado'),
+        ('Corregido', 'Corregido'),
     ]
     id_alumno = models.ForeignKey(User, on_delete=models.CASCADE)
     id_tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE)
@@ -105,3 +106,11 @@ def Eliminar_tareas_hechas(sender, instance, **kwargs):
     tareas_del_curso = Tarea_hecha.objects.filter(id_alumno=instance.id_alumno)
     for tarea in tareas_del_curso:
         tarea.delete()
+
+
+@receiver(post_save, sender=User)
+def crear_rol(sender, instance, created, **kwargs):
+    if created:
+        rol = UserRole.objects.create(
+            user=instance, role="alumno")
+        rol.save()

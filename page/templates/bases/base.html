@@ -9,10 +9,17 @@
   </head>
   <body>
     <nav>
+      {% if request.user.is_authenticated %}
       <ol>
         <a href="{% url 'home' %}"><li>inicio</li></a>
         <a href="{% url 'cursos' %}"><li>cursos</li></a>
+        <a href="{% url 'puntajes' %}"><li>Puntajes</li></a>
       </ol>
+      <ol>
+        {{request.user}}
+        <a href="{% url 'logout' %}"><li>Salir</li></a>
+      </ol>
+      {% endif %}
     </nav>
     {% block content %} {% endblock %}
     <script src="{% static 'js/script.js' %}"></script>

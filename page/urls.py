@@ -8,12 +8,15 @@ from . import views
 urlpatterns = [
     path('', views.home, name="home"),
     path('cursos', views.cursos, name="cursos"),
+    path('puntajes', views.mostrar_puntaje, name="puntajes"),
     path('tarea/<str:id_curso>', views.mostrar_tarea, name="tarea"),
     path('enviar_tarea', views.enviar_tarea, name="enviar_tarea"),
     path('inscribirse/<int:id>', views.inscribirse, name="inscribirse"),
     path('desinscribirse/<int:id>', views.dar_de_baja, name="desinscribirse"),
     path('register', views.register, name="register"),
-    path('login', views.login, name="login")
+    path('login', views.login, name="login"),
+    path('logout', views.logout_user, name="logout")
+
 ]
 urlpatterns += [
     re_path(r'^media/(?P<path>.*)$', serve, {

@@ -25,3 +25,17 @@ window.addEventListener("click", function (event) {
     }
   });
 });
+
+var btn = document.getElementById("curso_delete");
+
+btn.addEventListener("click", (e) => {
+  var confirm_message = confirm(
+    "Desea eliminar, una vez confirmado no se podra volver"
+  );
+
+  if (confirm_message) {
+    alert("Haz dado de baja este curso ya no podra deshacerlo");
+  } else {
+    e.preventDefault();
+  }
+});

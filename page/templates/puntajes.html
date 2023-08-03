@@ -1,0 +1,24 @@
+{% extends 'bases/base.html' %} {% block content %}
+<!---->
+
+<table>
+  <tr>
+    <th>Curso</th>
+    <th>Tareas Pendientes</th>
+    <th>Tareas Entregadas</th>
+    <th>Tareas Corregidas</th>
+    <th>Puntaje total</th>
+  </tr>
+
+  {% for puntaje in puntajes %}
+  <tr>
+    <td>{{puntaje.curso}}</td>
+    <td>{{puntaje.tareas_pendientes}}</td>
+    <td>{{puntaje.tareas_entregadas}}</td>
+    <td>{{puntaje.tareas_corregidas}}</td>
+    <td>{{puntaje.puntaje}}</td>
+  </tr>
+  {% endfor %}
+</table>
+<!---->
+{% endblock content %}

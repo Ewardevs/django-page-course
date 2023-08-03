@@ -3,14 +3,14 @@
 {% block content %}
 <!---->
 {% for curso in cursos %}
-<a href="{% url 'tarea' curso.id_curso.nombre_curso %}">
+<a href="{% url 'tarea' curso.id_curso.nombre_curso %}"> <!---->
   <div class="card-curso">
-    <img src="{{curso.id_curso.img_curso.url}}">
-    <p>{{curso.id_curso.nombre_curso}}</p>
-    <p>{{curso.id_curso.descripcion_curso}}</p>
-    <form action="{% url 'desinscribirse' curso.id %}" method="post">
+    <img src="{{curso.id_curso.img_curso.url}}"><!--Imagen del curso-->
+    <p>{{curso.id_curso.nombre_curso}}</p>      <!--Titulo del curso-->
+    <p>{{curso.id_curso.descripcion_curso}}</p> <!--Descripcion del curso-->
+    <form action="{% url 'desinscribirse' curso.id %}" method="post"><!--Boton Para dar de baja-->
       {% csrf_token %}
-      <button>Dar de baja el curso</button>
+      <button id="curso_delete">Dar de baja el curso</button>
     </form>
   </div>
 </a>
