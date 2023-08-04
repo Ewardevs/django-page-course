@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 
@@ -18,6 +19,7 @@ class UserRole(models.Model):
 
 class Curso(models.Model):
     img_curso = models.FileField(upload_to="imgs/", default=True)
+    docente = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre_curso = models.CharField(max_length=50)
     descripcion_curso = models.CharField(max_length=250)
     fecha_inicio_curso = models.DateTimeField(
@@ -25,6 +27,12 @@ class Curso(models.Model):
     fecha_fin_curso = models.DateTimeField(auto_now=False, auto_now_add=False)
     fecha_creacion_curso = models.DateTimeField(
         auto_now=False, auto_now_add=True)
+
+    def clean(self):
+        # Validación para asegurarse de que solo los docentes puedan ser asignados al curso
+        if self.docente.userrole.role != 'docente':
+            raise ValidationError(
+                "El docente asignado debe tener el rol de 'Docente'")
 
     def __str__(self):
         return self.nombre_curso
@@ -114,3 +122,10 @@ def crear_rol(sender, instance, created, **kwargs):
         rol = UserRole.objects.create(
             user=instance, role="alumno")
         rol.save()
+
+
+@receiver(post_save, sender=Tarea_hecha)
+def actualizar_estado_tarea(sender, instance, **kwargs):
+    if instance.puntos_hechos is not None and instance.puntos_hechos >= 0 and instance.puntos_hechos <= 100:
+        instance.estado = 'Corregido'
+        instance.save()

@@ -2,6 +2,7 @@
 <!---->
 {% block content %}
 <!---->
+
 {% for curso in cursos %}
 <a href="{% url 'tarea' curso.id_curso.nombre_curso %}"> <!---->
   <div class="card-curso">

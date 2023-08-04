@@ -26,16 +26,18 @@ window.addEventListener("click", function (event) {
   });
 });
 
-var btn = document.getElementById("curso_delete");
+var btn = document.querySelectorAll("#curso_delete");
 
-btn.addEventListener("click", (e) => {
-  var confirm_message = confirm(
-    "Desea eliminar, una vez confirmado no se podra volver"
-  );
+btn.forEach(function(boton) {
+  boton.addEventListener("click", function(e) {
+    var confirm_message = confirm(
+      "¿Desea eliminar? Una vez confirmado, no podrá deshacer esta acción."
+    );
 
-  if (confirm_message) {
-    alert("Haz dado de baja este curso ya no podra deshacerlo");
-  } else {
-    e.preventDefault();
-  }
+    if (!confirm_message) {
+      e.preventDefault(); // Prevenir la acción predeterminada solo si no se confirma
+    } else {
+      alert("Has dado de baja este curso. Ya no podrás deshacerlo.");
+    }
+  });
 });
