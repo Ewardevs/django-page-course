@@ -1,17 +1,17 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from .models import *
-from django.views.decorators.csrf import csrf_protect
-
 
 # Create your views here.
 
 
 def login(request):
-    if request.method == "GET":
+    if request.user.is_authenticated:
+        return redirect("home")
+    elif request.method == "GET":
         return render(request, 'login.html')
     else:
         user = authenticate(request,
@@ -24,6 +24,12 @@ def login(request):
         else:
             auth_login(request, user)
             return redirect("home")
+
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect("login")
 
 
 def register(request):
@@ -54,11 +60,15 @@ def register(request):
 
 @login_required
 def home(request):
-    cursos_inscriptos = Inscripcion.objects.filter(id_alumno=request.user)
-    return render(request, "home.html", {
-        "cursos": cursos_inscriptos,
-        "user": request.user
-    })
+    is_user = get_object_or_404(UserRole, user=request.user)
+    if is_user.role == "docente":
+        return HttpResponse("hola")
+    elif is_user.role == "alumno":
+        cursos_inscriptos = Inscripcion.objects.filter(id_alumno=request.user)
+        print(request.user.id)
+        return render(request, "home.html", {
+            "cursos": cursos_inscriptos,
+        })
 
 
 @login_required
@@ -98,7 +108,6 @@ def dar_de_baja(request, id):
 def mostrar_tarea(request, id_curso):
     tareas = Tarea_hecha.objects.filter(
         id_alumno=request.user, id_tarea__curso__nombre_curso=id_curso)
-
     if tareas:
         return render(request, "tareas.html", {
             "tareas": tareas
@@ -112,3 +121,30 @@ def enviar_tarea(request):
     cargar_tarea = Tarea_hecha.objects.filter(
         id=request.POST["id"]).update(tarea=request.POST["pdf_file"], estado="Entregado")
     return redirect("home")
+
+
+@login_required
+def mostrar_puntaje(request):
+    cursos_inscriptos = Inscripcion.objects.filter(id_alumno=request.user)
+    puntajes = Tarea_hecha.objects.filter(id_alumno=request.user)
+    lista = []
+    dato = {}
+    for curso in cursos_inscriptos:
+        dato = {"id_curso": curso.id_curso.id,
+                "curso": curso.id_curso.nombre_curso, "puntaje": 0, "tareas_pendientes": 0, "tareas_entregadas": 0, "tareas_corregidas": 0}
+        for puntaje in puntajes:
+            if puntaje.id_tarea.curso.id == curso.id_curso.id:
+                if puntaje.estado == "Pendiente":
+                    dato["tareas_pendientes"] += 1
+                elif puntaje.estado == "Entregado":
+                    dato["tareas_entregadas"] += 1
+                elif puntaje.estado == "Corregido":
+                    dato["tareas_corregidas"] += 1
+                if puntaje.puntos_hechos is not None:
+                    dato["puntaje"] += puntaje.puntos_hechos
+        lista.append(dato)
+    return render(request, "puntajes.html", {
+        "puntajes": lista,
+        "tareas": puntajes
+
+    })
