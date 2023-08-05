@@ -1,0 +1,11 @@
+:root {
+  --background: #343434;
+  --navbar-tooltip-color: #EEE;
+
+  --primary: #5bbded;
+  --primary-hover: #4fa6d0;
+  --primary-foreground: white;
+  --danger: #ed625b;
+  --danger-hover: #d05650;
+  --danger-foreground: white;
+}

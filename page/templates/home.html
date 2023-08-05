@@ -1,20 +1,50 @@
-{% extends 'bases/base.html' %}
+{% extends 'bases/base.html' %} {% load static %}
 <!---->
+
+{% block head %}
+<title>Home - ED Courses</title>
+{% endblock %}
+<!---->
+
+{% block header %}
+<h1>Inicio</h1>
+<div></div>
+{% endblock %}
+<!---->
+
 {% block content %}
-<!---->
-{% for curso in cursos %}
-<a href="{% url 'tarea' curso.id_curso.nombre_curso %}">
-  <div class="card-curso">
-    <img src="{{curso.id_curso.img_curso.url}}">
-    <p>{{curso.id_curso.nombre_curso}}</p>
-    <p>{{curso.id_curso.descripcion_curso}}</p>
-    <form action="{% url 'desinscribirse' curso.id %}" method="post">
+<section class="cards-grid">
+  {% for curso in cursos %}
+  <a class="card" href="{% url 'tarea' curso.id_curso.nombre_curso %}">
+    <img
+      class="card__image"
+      src="{{curso.id_curso.img_curso.url}}"
+      width="75"
+    />
+    <p class="card__title">{{curso.id_curso.nombre_curso}}</p>
+    <p class="card__description">{{curso.id_curso.descripcion_curso}}</p>
+    <form
+      class="card__unsubscribe"
+      action="{% url 'desinscribirse' curso.id %}"
+      method="post"
+    >
       {% csrf_token %}
-      <button>Dar de baja el curso</button>
+      <button class="card__unsubscribe__button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+        >
+          <path
+            class="card__unsubscribe__icon"
+            fill="#df3434"
+            d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12m2.46-7.12l1.41-1.41L12 12.59l2.12-2.12l1.41 1.41L13.41 14l2.12 2.12l-1.41 1.41L12 15.41l-2.12 2.12l-1.41-1.41L10.59 14l-2.13-2.12M15.5 4l-1-1h-5l-1 1H5v2h14V4h-3.5Z"
+          />
+        </svg>
+      </button>
     </form>
-  </div>
-</a>
+  </a>
   {% endfor %}
-  <!---->
-  {% endblock %}
-</a>
+</section>
+{% endblock %}

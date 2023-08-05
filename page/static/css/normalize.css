@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  line-height: 1.25;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}

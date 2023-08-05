@@ -56,7 +56,8 @@ def register(request):
 def home(request):
     cursos_inscriptos = Inscripcion.objects.filter(id_alumno=request.user)
     return render(request, "home.html", {
-        "cursos": cursos_inscriptos
+        "cursos": cursos_inscriptos,
+        "user": request.user
     })
 
 

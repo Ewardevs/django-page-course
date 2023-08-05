@@ -1,19 +1,40 @@
-{% extends 'bases/base.html' %}
-<!---->
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-{% block content %}
-<form method="post">
-  {% csrf_token %}
-  <!---->
-  {{error}}
+    <link rel="preload" href="{% static 'css/base.css' %}" as="style" />
+    <link rel="preload" href="{% static 'css/normalize.css' %}" as="style" />
+    <link rel="preload" href="{% static 'imgs/Logo-254px.webp' %}" as="image" />
 
-  <label for="username">Usuario</label>
-  <input type="text" name="username" />
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <title>Home - ED Courses</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  </head>
+  <body>
+    <div class="layout">
+      <main>
+        <header>
+          <h1>Login</h1>
+        </header>
+        <form method="post" class="login">
+          {% csrf_token %}
+          <!---->
+          {{error}}
 
-  <label for="password">Contraseña</label>
-  <input type="password" name="password" />
+          <label for="username">Usuario</label>
+          <input type="text" name="username" />
 
-  <button>Ingresar</button>
-</form>
+          <label for="password">Contraseña</label>
+          <input type="password" name="password" />
 
-{% endblock content %}
+          <button class="button button--primary">Ingresar</button>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
