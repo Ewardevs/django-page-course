@@ -68,7 +68,6 @@ def home(request):
         print(request.user.id)
         return render(request, "home.html", {
             "cursos": cursos_inscriptos,
-
         })
 
 

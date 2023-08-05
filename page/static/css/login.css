@@ -1,0 +1,47 @@
+
+.layout {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: white;
+}
+
+.layout main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+.login {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  max-width: 360px;
+}
+
+.login label {
+  font-size: 1.2rem;
+}
+
+.login input {
+  background: #FFF;
+  color: black;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
+
+.login input:focus {
+  outline: none;
+}

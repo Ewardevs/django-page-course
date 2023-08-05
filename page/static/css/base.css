@@ -1,0 +1,230 @@
+.cards-grid {
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 970px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 696px) {
+  .cards-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 75px 1fr;
+  grid-row-gap: 1rem;
+  background: white;
+  border-radius: 5px;
+  padding: 1rem;
+  color: black;
+  box-shadow: 0px 0px 0px #0000;
+}
+
+.card__title {
+  align-self: center;
+  font-size: 1.7rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding-left: 0.5rem;
+  padding-right: 1.8rem;
+}
+
+.card__description {
+  grid-column: span 2;
+}
+
+.card__subscribe {
+  grid-column: span 2;
+}
+
+.card__subscribe__button {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.5rem 1rem;
+
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  border-radius: 5px;
+
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-size: 1.4rem;
+
+  transition: 200ms ease;
+  transition-property: box-shadow, transform;
+}
+
+.card__subscribe__button:disabled {
+  background: #a2a2a2;
+  color: white;
+  pointer-events: none;
+}
+
+.card__subscribe__button:hover {
+  box-shadow: 0px 10px 20px -10px #0005;
+  transform: translateY(-3px);
+}
+
+.card__subscribe__button:hover .course__subscribe__icon {
+  pointer-events: none;
+  fill: #a31a1a;
+  transition: fill 200ms ease;
+  animation: card__unsubscribe__icon--shake infinite 1s linear;
+  transform-origin: center;
+}
+
+@media (max-width: 300px) {
+  .card__image {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 45px;
+  }
+
+  .card__title {
+    grid-column: span 2;
+  }
+}
+
+@keyframes card__unsubscribe__icon--shake {
+  from {
+    transform: rotate(0deg) scale(1.2);
+  }
+  25% {
+    transform: rotate(-15deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  75% {
+    transform: rotate(15deg) scale(1.1);
+  }
+  to {
+    transform: rotate(0deg) scale(1.2);
+  }
+}
+
+.card__unsubscribe {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+}
+
+.card__unsubscribe__button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.card__unsubscribe__button:hover .card__unsubscribe__icon {
+  pointer-events: none;
+  fill: #a31a1a;
+  transition: fill 200ms ease;
+  animation: card__unsubscribe__icon--shake infinite 1s linear;
+  transform-origin: center;
+}
+
+@keyframes card__unsubscribe__icon--shake {
+  from {
+    transform: rotate(0deg) scale(1.2);
+  }
+  25% {
+    transform: rotate(-15deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  75% {
+    transform: rotate(15deg) scale(1.1);
+  }
+  to {
+    transform: rotate(0deg) scale(1.2);
+  }
+}
+
+.card__subscribe__badge {
+  --shadow-color: #0f0;
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  min-width: 20px;
+  min-height: 20px;
+  background: #45f96a;
+  border: 3px solid white;
+  color: white;
+  border-radius: 100px;
+  box-shadow: 0 0 10px var(--shadow-color);
+  padding: 0.4rem 0.5rem;
+}
+.card__subscribe__badge:empty {
+  border-radius: 100%;
+}
+
+.badge--Entregado {
+  --shadow-color: #fd0;
+  background: #f4cb46;
+  color: black;
+}
+.badge--Pendiente {
+  --shadow-color: #f00;
+  background: #e7463a;
+}
+
+.buttons-group-flex {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button {
+  --button-background: white;
+  --button-background-hover: #eee;
+  --button-foreground: black;
+  padding: 0.5rem 1rem;
+  background: var(--button-background);
+  color: var(--button-foreground);
+  border: 2px solid transparent;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 200ms ease;
+  transition-property: background, transform, color;
+}
+
+.button:disabled,
+.button[disabled],
+.button--disabled {
+  background: #a2a2a2;
+  color: white;
+  pointer-events: none;
+}
+
+.button:hover {
+  background: var(--button-background-hover);
+  transform: scale(1.05);
+}
+
+.button--primary {
+  --button-background: var(--primary);
+  --button-background-hover: var(--primary-hover);
+  --button-foreground: var(--primary-foreground);
+}
+
+.button--danger {
+  --button-background: var(--danger);
+  --button-background-hover: var(--danger-hover);
+  --button-foreground: var(--danger-foreground);
+}
