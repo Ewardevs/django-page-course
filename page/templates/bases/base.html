@@ -1,27 +1,112 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    <title>Django app</title>
+
+    <link rel="preload" href="{% static 'css/layout.css' %}" as="style" />
+    <link rel="preload" href="{% static 'css/base.css' %}" as="style" />
+    <link rel="preload" href="{% static 'css/normalize.css' %}" as="style" />
+    <link rel="preload" href="{% static 'imgs/Logo-254px.webp' %}" as="image" />
+
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    {% block head %}
+    <title>ED Courses</title>
+    {% endblock %}
   </head>
   <body>
-    <nav>
-      {% if request.user.is_authenticated %}
-      <ol>
-        <a href="{% url 'home' %}"><li>inicio</li></a>
-        <a href="{% url 'cursos' %}"><li>cursos</li></a>
-        <a href="{% url 'puntajes' %}"><li>Puntajes</li></a>
-      </ol>
-      <ol>
-        {{request.user}}
-        <a href="{% url 'logout' %}"><li>Salir</li></a>
-      </ol>
-      {% endif %}
-    </nav>
-    {% block content %} {% endblock %}
-    <script src="{% static 'js/script.js' %}"></script>
+    <div class="layout">
+      <header>{% block header %} {% endblock %}</header>
+      <main>{% block content %} {% endblock %}</main>
+      <nav class="nav">
+        <div class="nav__container">
+          <img
+            class="nav__logo"
+            src="{% static 'imgs/Logo-254px.webp' %}"
+            width="35"
+          />
+          <ol class="nav__list">
+            <li class="nav__item">
+              <a
+                class="nav__item-link"
+                data-title="Home"
+                href="{% url 'home' %}"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    fill="#ffffff"
+                    d="M224 115.55V208a16 16 0 0 1-16 16H48a16 16 0 0 1-16-16v-92.45a16 16 0 0 1 5.17-11.78l80-75.48l.11-.11a16 16 0 0 1 21.53 0a1.14 1.14 0 0 0 .11.11l80 75.48a16 16 0 0 1 5.08 11.78Z"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                class="nav__item-link"
+                data-title="Courses"
+                href="{% url 'cursos' %}"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#ffffff"
+                    d="M3 9H1v11c0 1.11.89 2 2 2h16v-2H3V9z"
+                  />
+                  <path
+                    fill="#ffffff"
+                    d="M18 5V3c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H5v11c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5h-5zm-6-2h4v2h-4V3zm0 12V8l5.5 3.5L12 15z"
+                  />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                class="nav__item-link"
+                data-title="Puntajes"
+                href="{% url 'puntajes' %}"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#ffffff"
+                    d="m16 11.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8l6.5 3.78Z"
+                  />
+                </svg>
+              </a>
+            </li>
+          </ol>
+          <button class="theme-switcher">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
+            >
+              <path
+                fill="#ffffff"
+                d="M116 32V16a12 12 0 0 1 24 0v16a12 12 0 0 1-24 0Zm80 96a68 68 0 1 1-68-68a68.07 68.07 0 0 1 68 68Zm-24 0a44 44 0 1 0-44 44a44.05 44.05 0 0 0 44-44ZM51.51 68.49a12 12 0 1 0 17-17l-12-12a12 12 0 0 0-17 17Zm0 119l-12 12a12 12 0 0 0 17 17l12-12a12 12 0 1 0-17-17ZM196 72a12 12 0 0 0 8.49-3.51l12-12a12 12 0 0 0-17-17l-12 12A12 12 0 0 0 196 72Zm8.49 115.51a12 12 0 0 0-17 17l12 12a12 12 0 0 0 17-17ZM44 128a12 12 0 0 0-12-12H16a12 12 0 0 0 0 24h16a12 12 0 0 0 12-12Zm84 84a12 12 0 0 0-12 12v16a12 12 0 0 0 24 0v-16a12 12 0 0 0-12-12Zm112-96h-16a12 12 0 0 0 0 24h16a12 12 0 0 0 0-24Z"
+              />
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
   </body>
 </html>
