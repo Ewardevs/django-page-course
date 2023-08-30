@@ -14,9 +14,10 @@
 <!---->
 
 {% block content %}
+
 <section class="cards-grid">
   {% for curso in cursos %}
-  <a class="card" href="{% url 'tarea' curso.id_curso.nombre_curso %}">
+  <a class="card" href="{% url 'tarea' curso.id_curso %}">
     <img
       class="card__image"
       src="{{curso.id_curso.img_curso.url}}"
@@ -49,3 +50,4 @@
   {% endfor %}
 </section>
 {% endblock %}
+

@@ -1,0 +1,121 @@
+{% extends 'bases/base_docente.html' %} {% load static %}
+<!---->
+
+{% block head %}
+<title>Tasks - ED Courses</title>
+<link rel="stylesheet" href="{% static 'css/task.css' %}" />
+<script defer src="{% static 'js/tasks.js' %}"></script>
+{% endblock %}
+<!---->
+
+{% block header %}
+<h1>Tareas</h1>
+<div>{{error}}</div>
+{% endblock %}
+<!---->
+
+{% block content %}
+<section class="cards-grid">
+  {% for tarea in tareas %}
+  <article class="card task-card">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="75"
+      height="75"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="#000000"
+        d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6m0 2h7v5h5v11H6V4m2 8v2h8v-2H8m0 4v2h5v-2H8Z"
+      />
+    </svg>
+    <p class="card__title">{{tarea.titulo_tarea}}</p>
+
+        <form
+      class="card__unsubscribe"
+      action="{% url 'lista_completado' tarea.id %}"
+      method="post"
+    >
+      {% csrf_token %}
+      <button class="card__unsubscribe__button">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+        <path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 
+        0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 
+        38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 
+        0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 
+        640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 
+        411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 
+        0-26.7-11.9-26.7-26.7z"/></svg>
+      </button>
+    </form>
+    <p class="card__description">{{tarea.descripcion_tarea}}</p>
+    <div class="card__subscribe">
+      <button
+        class="card__subscribe__button"
+        data-id="task-modal-{{ tarea.id }}"
+      >
+        Ver Tarea
+      </button>
+    </div>
+  </article>
+  <div id="task-modal-{{ tarea.id }}" class="modal">
+    <div class="modal__overlay"></div>
+    <div class="modal__content">
+      <span class="close">&times;</span>
+      <p class="modal__title">{{ tarea.titulo_tarea }}</p>
+
+      <p class="modal__description">{{ tarea.descripcion_tarea }}</p>
+      
+ 
+        <div class="modal__footer">
+          <div class="buttons-group-flex" style="justify-content: space-between;flex-direction:row;width:100%;">
+
+            <button type="button" class="button button--danger">Cancelar</button>
+            <div>
+              <form action="{% url 'eliminar_tarea' %}" method="post">
+                {% csrf_token %}
+                <input name="id" type="hidden" value="{{ tarea.id }}" />
+                <button class="button button--danger" style="background-color:#ff0c00;">Eliminar Tarea</button>
+              </form>
+            
+              <form action="" method="post">
+                {% csrf_token %}
+                <button class="button button--primary" style="background-color:#00a9fb;">Editar tarea</button>
+              </form>
+              
+            </div>
+
+            
+          </div>  
+
+        </div>
+      
+    </div>
+  </div>
+  {% endfor %}
+  <a href="#">añadir tarea</a>
+  <!-- Modal para añadir tarea -->
+  <div>
+    <form action="{% url 'crear_tarea' %}" method="post">
+      {% csrf_token %}
+
+      <input type="hidden" name="id_curso" value="{{curso}}">
+
+      <label for="titulo_tarea">Titulo</label>
+      <input type="text" name="titulo_tarea" required>
+      
+      <label for="descripcion_tarea">Descripcion</label>
+      <input type="text" name="descripcion_tarea" required>
+
+      <label for="puntos">Puntos</label>
+      <input type="number" max=100 min=0 name="puntos" required>
+
+      <label for="archivo_pdf">Archivo</label>
+      <input type="file" name="archivo_pdf" required>
+
+      <button type="submit">Cargar tarea</button>
+    </form>
+  </div>
+</section>
+{% endblock content %}
+<!---->

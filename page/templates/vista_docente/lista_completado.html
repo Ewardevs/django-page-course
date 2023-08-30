@@ -1,0 +1,38 @@
+{% extends 'bases/base_docente.html' %}
+
+{% block content %}
+<!---->
+    <table id="datatable-programmers" class="table" border="1px">
+        <thead>
+            <tr>
+                <th class="centered">Alumno</th>
+                <th class="centered">Estado</th>
+                <th class="centered">puntos</th>
+                <th class="centered">Corregir</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody_programmers">
+        {% for l in lista %}
+            <tr>
+                    <th>{{l.id_alumno.username}}</th>
+                    <th>{{l.estado}}</th>
+                    {% if l.puntos_hechos is none %}
+                    <th>0 de {{l.id_tarea.puntos}}</th>
+                    {% else %}
+                    <th>{{l.puntos_hechos}} de {{l.id_tarea.puntos}}</th>
+                    {% endif %}
+                    <!---->
+                    {% if l.estado == "Pendiente" %}
+                    <th>no disponible</th>
+                    {% else %}
+                        {% if l.estado == "Entregado" %}
+                        <th><a href="{% url 'corregir' tarea.id %}"> Corregir</a></th>
+                        {% else %}
+                        <th><a href="#">editar</a></th>
+                        {% endif %}
+                    {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

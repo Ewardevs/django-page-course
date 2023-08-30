@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-u$_d9s174s+^^rydc6z-l&_jecul1om7n41_!jrec2)ec7kpv5
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://f4c6-181-94-248-216.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = ['https://56f3-181-94-248-216.ngrok-free.app']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'page',
+    'rest_framework'
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'  # Antes de los MIDDLEWARE
@@ -130,3 +131,10 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'alexanderovelar4@gmail.com'
+EMAIL_HOST_PASSWORD = 'dtcirpziddpvalqn'

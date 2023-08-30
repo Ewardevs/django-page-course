@@ -9,3 +9,4 @@ subscribeForms.forEach(subscribeForm => {
     subscribeForm.submit();
   })
 });
+

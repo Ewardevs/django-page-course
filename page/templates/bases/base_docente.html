@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="{% static 'css/layout.css' %}" />
     <link rel="stylesheet" href="{% static 'css/dark.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+
+    
+
     {% block head %}
     <title>ED Courses</title>
     {% endblock %}
@@ -49,50 +52,12 @@
                 </svg>
               </a>
             </li>
-            <li>
-              <a
-                class="nav__item-link"
-                data-title="Courses"
-                href="{% url 'cursos' %}"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#ffffff"
-                    d="M3 9H1v11c0 1.11.89 2 2 2h16v-2H3V9z"
-                  />
-                  <path
-                    fill="#ffffff"
-                    d="M18 5V3c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H5v11c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V5h-5zm-6-2h4v2h-4V3zm0 12V8l5.5 3.5L12 15z"
-                  />
-                </svg>
-              </a>
-            </li>
-            <li>
-              <a
-                class="nav__item-link"
-                data-title="Puntajes"
-                href="{% url 'puntajes' %}"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#ffffff"
-                    d="m16 11.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8l6.5 3.78Z"
-                  />
-                </svg>
-              </a>
-            </li>
+          
           </ol>
+          <!-- Nuevos -->
+          <span>{{request.user}}</span>
           <a href="{% url 'logout' %}">Salir</a>
+          <!---->
           <button class="theme-switcher">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,5 +74,6 @@
         </div>
       </nav>
     </div>
+
   </body>
 </html>

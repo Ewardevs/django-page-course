@@ -1,0 +1,17 @@
+{% extends 'bases/base_docente.html' %}
+<!---->
+{% block content %}
+<!---->
+<p>{{tarea.estado}}</p>
+<p>{{tarea.id_alumno.username}}</p>
+<p>{{tarea.id_tarea.titulo_tarea}}</p>
+<p>{{tarea.id_tarea.descripcion_tarea}}</p>
+<form action="{% url 'corregir' tarea.id %}" method="post">
+    {% csrf_token %}
+    <label for="puntos">dar puntaje</label>
+
+    <input type="number" value="{{tarea.puntos}}" name="puntos" min=0 max={{tarea.id_tarea.puntos}} required>
+    <button>Dar Puntaje</button>
+</form>
+<!---->
+{% endblock content %}

@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User, Group
-from django.db.models.signals import post_save, post_delete
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ValidationError
@@ -18,10 +18,10 @@ class UserRole(models.Model):
 
 
 class Curso(models.Model):
-    img_curso = models.FileField(upload_to="imgs/", default=True)
+    img_curso = models.FileField(upload_to="imgs/")
     docente = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre_curso = models.CharField(max_length=50)
-    descripcion_curso = models.CharField(max_length=250)
+    descripcion_curso = models.TextField()
     fecha_inicio_curso = models.DateTimeField(
         auto_now=False, auto_now_add=False)
     fecha_fin_curso = models.DateTimeField(auto_now=False, auto_now_add=False)
@@ -40,7 +40,7 @@ class Curso(models.Model):
 
 class Tarea(models.Model):
     titulo_tarea = models.CharField(max_length=50)
-    descripcion_tarea = models.CharField(max_length=250)
+    descripcion_tarea = models.TextField(max_length=250)
     archivo_pdf = models.FileField(upload_to="pdfs/", blank=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     puntos = models.IntegerField(validators=[
@@ -77,8 +77,8 @@ class Tarea_hecha(models.Model):
     estado = models.CharField(
         max_length=100, null=True, choices=ESTADOS_CHOICES, default=ESTADOS_CHOICES[0])
 
-    def __str__(self):
-        return self.id_alumno.username + " tiene "+self.estado+" la tarea con nombre "+self.id_tarea.titulo_tarea+" del  curso "+self.id_tarea.curso.nombre_curso
+    def __str__(self) -> str:
+        return self.id_alumno.username + " "+self.id_tarea.titulo_tarea
 
 
 @receiver(post_save, sender=Tarea)
@@ -111,7 +111,8 @@ def crear_tareas_hechas_al_inscribirse(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Inscripcion)
 def Eliminar_tareas_hechas(sender, instance, **kwargs):
-    tareas_del_curso = Tarea_hecha.objects.filter(id_alumno=instance.id_alumno)
+    tareas_del_curso = Tarea_hecha.objects.filter(
+        id_alumno=instance.id_alumno, id_tarea__curso=instance.id_curso)
     for tarea in tareas_del_curso:
         tarea.delete()
 
@@ -125,7 +126,16 @@ def crear_rol(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Tarea_hecha)
-def actualizar_estado_tarea(sender, instance, **kwargs):
-    if instance.puntos_hechos is not None and instance.puntos_hechos >= 0 and instance.puntos_hechos <= 100:
+def completar_tarea_al_recibir_puntaje(sender, instance, **kwargs):
+    if instance.puntos_hechos != None:
+        instance.estado = "Entregado"
+
+
+@receiver(pre_save, sender=Tarea_hecha)
+def cambiar_estado_si_puntaje(sender, instance, **kwargs):
+    if instance.puntos_hechos is not None and instance.puntos_hechos >= 0:
         instance.estado = 'Corregido'
-        instance.save()
+
+
+# Registrar la señal
+pre_save.connect(cambiar_estado_si_puntaje, sender=Tarea_hecha)

@@ -10,7 +10,7 @@
 
 {% block header %}
 <h1>Tareas</h1>
-<div></div>
+<div>{{error}}</div>
 {% endblock %}
 <!---->
 
@@ -50,7 +50,7 @@
         >{{ tarea.estado }}</span
       >
       <p class="modal__description">{{ tarea.id_tarea.descripcion_tarea }}</p>
-      <form action="{% url 'enviar_tarea' %}" method="post">
+      <form action="{% url 'enviar_tarea' tarea.id_tarea.curso.nombre_curso %}" method="post">
         {% csrf_token %}
         <input name="id" type="hidden" value="{{ tarea.id }}" />
         <label class="file-input__label">
@@ -64,18 +64,19 @@
           <span></span>
           {% endif %}
 
-          {% if tarea.estado == "Entregado" %}
+          {% if tarea.estado == "Pendiente" %}
           <!---->
-          <div class="buttons-group-flex">
+                    <div class="buttons-group-flex">
             <button type="button" class="button button--danger">Cancelar</button>
-            <button class="button button--primary" disabled>Subir Tarea</button>
+            <button type="submit" class="button button--primary">Subir Tarea</button>
           </div>
+
 
           {% else %}
           <div class="buttons-group-flex">
             <button type="button" class="button button--danger">Cancelar</button>
-            <button type="submit" class="button button--primary">Subir Tarea</button>
-          </div>
+            <button class="button button--primary" disabled>Subir Tarea</button>
+          </div>  
           {% endif %}
         </div>
       </form>

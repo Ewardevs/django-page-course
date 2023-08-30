@@ -1,0 +1,32 @@
+{% extends 'bases/base_docente.html' %}
+{% load static %}
+
+<!--  -->
+{% block content %}
+  <div class="container">
+    <table id="datatable-programmers" class="table" border="1px">
+      <thead>
+        <tr>
+          <th class="centered">curso</th>
+          <th class="centered">alumno</th>
+          <th class="centered">Tareas pendientes</th>
+          <th class="centered">Tareas entregadas</th>
+          <th class="centered">Tareas Corregidas</th>
+          <th class="centered">puntaje</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody_programmers">
+        {% for alumno in alumnos %}
+        <tr>
+          <th>{{alumno.curso}}</th>
+          <th>{{alumno.alumno}}</th>
+          <th>{{alumno.tareas_pendientes}}</th>
+          <th>{{alumno.tareas_entregadas}}</th>
+          <th>{{alumno.tareas_corregidas}}</th>
+          <th>{{alumno.puntaje}}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
