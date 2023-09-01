@@ -12,3 +12,4 @@ whitenoise==6.5.0
 psycopg2-binary==2.9.7
 django-utils==0.0.2
 django-utils-six==2.0
+django-cors-headers==4.2.0
