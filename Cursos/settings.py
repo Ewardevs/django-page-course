@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'Cursos.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        default='postgres://django_2czy_user:Te3xWg7lbOTPAUxTCubEuELfb3z0wLLh@dpg-cjnssqkdfrcc739h1jeg-a/django_2czy',
         conn_max_age=600
     )
 }
