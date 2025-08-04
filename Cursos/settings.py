@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'Cursos.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default":dj_database_url.parse("postgres://django_2czy_user:Te3xWg7lbOTPAUxTCubEuELfb3z0wLLh@dpg-cjnssqkdfrcc739h1jeg-a.oregon-postgres.render.com/django_2czy")
+    "default":dj_database_url.parse("postgresql://djang_project_user:AeM4KUuoQJCHPwiSilEcURLrw09sJhBR@dpg-d28au7re5dus73fdhvf0-a.oregon-postgres.render.com/djang_project")
 }
 
 
